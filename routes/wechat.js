@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express')
-const GroupHandle = require('../controller/wechat/groups.js')
+const GroupHandle = require('../controller/wechat/groups')
 
 const router = express.Router();
 router.get('/groups', GroupHandle.getGroupList);

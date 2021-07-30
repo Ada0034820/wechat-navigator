@@ -1,6 +1,6 @@
 'use strict';
 
-const BaseComponent = require('./baseComponent.js')
+const BaseComponent = require('./baseComponent')
 
 class WechatComponent extends BaseComponent {
   constructor() {
