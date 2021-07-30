@@ -1,4 +1,4 @@
-const GroupsModel = require('../../models/echat/Groups')
+const GroupsModel = require('../../models/wechat/Groups')
 const formidable = require("formidable")
 const { v4: uuidv4 } = require('uuid');
 const WechatComponent = require('../../prototype/wechatComponent')
