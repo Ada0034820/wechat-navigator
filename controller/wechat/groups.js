@@ -1,7 +1,7 @@
-const GroupsModel = require('../../models/Wechat/Groups')
+const GroupsModel = require('../../models/Wechat/Groups.js')
 const formidable = require("formidable")
 const { v4: uuidv4 } = require('uuid');
-const WechatComponent = require('../../prototype/wechatComponent')
+const WechatComponent = require('../../prototype/wechatComponent.js')
 
 class GroupHandle extends WechatComponent {
   constructor() {
