@@ -1,0 +1,36 @@
+{
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module"
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "mocha": true
+  },
+  "rules": {
+    "camelcase": "off",
+    "no-inner-declarations": "off",
+    "dot-notation": "off",
+    "no-undef": "off",
+    "no-unused-vars": "off",
+    "no-case-declarations": "off",
+    "no-unused-expressions": "off",
+    "space-infix-ops": ["error", { "int32Hint": false }],
+    "space-before-blocks": "error",
+    "arrow-spacing":"error",
+    "no-async-promise-executor":"off",
+    "key-spacing":"error",
+    "indent": [
+      "error",
+      2,
+      {
+        "ObjectExpression": 1
+      }
+    ],
+    "prefer-const": "off",
+    "no-useless-call": "off",
+    "no-empty-function": "off"
+  }
+}

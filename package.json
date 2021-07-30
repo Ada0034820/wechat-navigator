@@ -1,0 +1,36 @@
+{
+  "name": "wechat-navigator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon --harmony index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "pm2 deploy production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ada0034820/wechat-navigator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ada0034820/wechat-navigator/issues"
+  },
+  "homepage": "https://github.com/Ada0034820/wechat-navigator#readme",
+  "devDependencies": {
+    "chalk": "^4.1.1",
+    "config-lite": "^3.0.0",
+    "connect-mongo": "^4.4.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.31.0",
+    "eslint-plugin-node": "^11.1.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "formidable": "^1.2.2",
+    "mongoose": "^5.13.4",
+    "nodemon": "^2.0.12",
+    "pm2": "^5.1.0",
+    "uuid": "^8.3.2"
+  }
+}
