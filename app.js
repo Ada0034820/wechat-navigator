@@ -4,9 +4,12 @@ const session = require('express-session')
 const config = require('config-lite')(__dirname);
 const router = require('./routes/index.js')
 const db = require('./mongodb/db.js')
+var proxy = require('express-http-proxy');
 // import config from 'config-lite';
 const app = express()
+const proxyServer = express()
 const port = 3000
+const isdev = process.env.NODE_ENV === 'development'
 
 app.use(session({
   name: config.session.name,
@@ -18,11 +21,12 @@ app.use(session({
     mongoUrl: config.url
   })
 }))
+proxyServer.use('/proxy', proxy('localhost:3000'));
 router(app);
-app.use(express.static('./public'));
+proxyServer.use(express.static('./public'));
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
-app.listen(80, () => {
-  console.log(`Example app listening at http://localhost`)
+proxyServer.listen(isdev ? 8080 : 80, () => {
+  console.log(`proxyServer listening at http://localhost,mode=${process.env.NODE_ENV}`)
 })
