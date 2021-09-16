@@ -10,5 +10,5 @@ router.post("/addimg", GroupHandle.uploadImg);
 router.post("/addGroup", GroupHandle.addGroup);
 router.post("/editGroup", GroupHandle.editGroup);
 router.post("/deleteGroup", GroupHandle.deleteGroup);
-router.get("/getAccessToken", LoginHandle.getAccessToken);
+router.get("/getWechatUserInfo", LoginHandle.getWechatUserInfo);
 module.exports = router;
