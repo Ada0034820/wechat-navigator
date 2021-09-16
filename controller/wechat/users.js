@@ -7,6 +7,7 @@ const WechatComponent = require("../../prototype/wechatComponent");
 class UsersHandle extends WechatComponent {
   constructor() {
     super();
+    this.wechatUserRegister = this.wechatUserRegister.bind(this);
   }
   async getWechatUserInfo(req, res, next) {
     try {
