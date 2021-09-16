@@ -18,7 +18,7 @@ class UsersHandle extends WechatComponent {
         var responseBody = JSON.parse(response.body);
         if (responseBody.access_token) {
           let scopeUserInfoUrl = `https://api.weixin.qq.com/sns/userinfo?access_token=${responseBody.access_token}&openid=${responseBody.openid}&lang=zh_CN`;
-          request(scopeUserInfoUrl, async function (error, _response, body) {
+          request(scopeUserInfoUrl, async (error, _response, body) => {
             var wechatUserInfo = JSON.parse(_response.body);
             const user = await UsersModel.findOne({
               openid: wechatUserInfo.openid,
