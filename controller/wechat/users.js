@@ -10,6 +10,7 @@ class UsersHandle extends WechatComponent {
     this.wechatUserRegister = this.wechatUserRegister.bind(this);
   }
   async getWechatUserInfo(req, res, next) {
+    var _this = this;
     try {
       const code = req.query.code;
       let url = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx8e909dc564460200&secret=9c6413b62c2174ef7d9f03e8883c1252&code=${code}&grant_type=authorization_code`;
@@ -23,7 +24,7 @@ class UsersHandle extends WechatComponent {
               openid: wechatUserInfo.openid,
             });
             if (!user) {
-              await this.wechatUserRegister(wechatUserInfo);
+              await _this.wechatUserRegister(wechatUserInfo);
             }
             res.send(_response.body.openid);
           });
