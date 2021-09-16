@@ -20,13 +20,14 @@ class UsersHandle extends WechatComponent {
           let scopeUserInfoUrl = `https://api.weixin.qq.com/sns/userinfo?access_token=${responseBody.access_token}&openid=${responseBody.openid}&lang=zh_CN`;
           request(scopeUserInfoUrl, async (error, _response, body) => {
             var wechatUserInfo = JSON.parse(_response.body);
-            // const user = await UsersModel.findOne({
-            //   openid: wechatUserInfo.openid,
-            // });
-            // if (!user) {
-            //   await _this.wechatUserRegister(wechatUserInfo);
-            // }
-            res.send(_response.body.openid);
+            const user = await UsersModel.findOne({
+              openid: wechatUserInfo.openid,
+            });
+            if (!user) {
+              res.send("aaa");
+              await _this.wechatUserRegister(wechatUserInfo);
+            }
+            res.send(wechatUserInfo.openid);
           });
         } else {
           res.send(response.body);
