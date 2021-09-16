@@ -38,6 +38,8 @@
         ajax.send();
         //步骤四:注册事件 onreadystatechange 状态改变就会调用
         ajax.onreadystatechange = function() {
+            document.write("</br>")
+            document.write(JSON.stringify(ajax))
             if (ajax.readyState == 4 && ajax.status == 200) {
                 //步骤五 如果能够进到这个判断 说明 数据 完美的回来了,并且请求的页面是存在的
                 document.write("</br>")
