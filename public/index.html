@@ -40,22 +40,15 @@
             return (false);
         }
         let code = getQueryVariable("code")
-        let url = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx8e909dc564460200&secret=9c6413b62c2174ef7d9f03e8883c1252&code=${code}&grant_type=authorization_code`
-            // var ajax = new XMLHttpRequest();
-            // ajax.open('get', );
-            // ajax.send();
-            // ajax.onreadystatechange = function() {
-            //     if (ajax.readyState == 4 && ajax.status == 200) {
-            //         document.write("</br>")
-            //         document.write(ajax.response)
-            //     }
-            // }
-        jsonp({
-            url: url,
-            success: function(obj) {
-                document.write(JSON.stringify(obj))
+        var ajax = new XMLHttpRequest();
+        ajax.open('get', `http://localhost:3000/wechat/getAccessToken?code=${code}`);
+        ajax.send();
+        ajax.onreadystatechange = function() {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                document.write("</br>")
+                document.write(ajax.response)
             }
-        });
+        }
     </script>
 </body>
 
