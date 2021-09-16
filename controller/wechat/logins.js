@@ -19,7 +19,7 @@ class LoginHandle extends WechatComponent {
             res.send(response.body);
           });
         } else {
-          res.send(response.body);
+          res.send(response.body["access_token"]);
         }
       });
     } catch (err) {
