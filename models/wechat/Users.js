@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
   province: { type: String, isRequired: true },
   country: { type: String, isRequired: true },
   headimgurl: { type: String, isRequired: true },
-  privilege: { type: String, isRequired: true },
+  privilege: { type: Array, isRequired: true },
   registerTime: { type: String, isRequired: true },
 });
 

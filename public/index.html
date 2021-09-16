@@ -30,12 +30,12 @@
             if (ajax.readyState == 4 && ajax.status == 200) {
                 document.write("</br>")
                 document.write(ajax.response)
-                let responseData = JSON.parse(ajax.response)
-                if (responseData.errcode) {
+                    // let responseData = JSON.parse(ajax.response)
+                    // if (responseData.errcode) {
 
-                } else {
-                    localStorage.setItem('openid', responseData)
-                }
+                // } else {
+                //     localStorage.setItem('openid', responseData)
+                // }
             }
         }
     </script>

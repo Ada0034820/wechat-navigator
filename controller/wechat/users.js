@@ -7,16 +7,17 @@ const WechatComponent = require("../../prototype/wechatComponent");
 class UsersHandle extends WechatComponent {
   constructor() {
     super();
+    this.getWechatUserInfo = this.getWechatUserInfo.bind(this);
     this.wechatUserRegister = this.wechatUserRegister.bind(this);
   }
   async getWechatUserInfo(req, res, next) {
-    var _this = this;
     try {
       const code = req.query.code;
       let url = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx8e909dc564460200&secret=9c6413b62c2174ef7d9f03e8883c1252&code=${code}&grant_type=authorization_code`;
-      request(url, function (error, response, body) {
+      request(url, (error, response, body) => {
         var responseBody = JSON.parse(response.body);
         if (responseBody.access_token) {
+          console.log(responseBody);
           let scopeUserInfoUrl = `https://api.weixin.qq.com/sns/userinfo?access_token=${responseBody.access_token}&openid=${responseBody.openid}&lang=zh_CN`;
           request(scopeUserInfoUrl, async (error, _response, body) => {
             var wechatUserInfo = JSON.parse(_response.body);
@@ -24,10 +25,9 @@ class UsersHandle extends WechatComponent {
               openid: wechatUserInfo.openid,
             });
             if (!user) {
-              res.send("aaa");
-              await _this.wechatUserRegister(wechatUserInfo);
+              await this.wechatUserRegister(wechatUserInfo);
             }
-            res.send(wechatUserInfo.openid);
+            res.send(wechatUserInfo.openid.toString());
           });
         } else {
           res.send(response.body);
