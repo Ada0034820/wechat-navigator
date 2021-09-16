@@ -40,9 +40,8 @@
         ajax.onreadystatechange = function() {
             if (ajax.readyState == 4 && ajax.status == 200) {
                 //步骤五 如果能够进到这个判断 说明 数据 完美的回来了,并且请求的页面是存在的
-                　　　　
-                console.log(ajax.responseText); //输入相应的内容
-                　　
+                document.write("</br>")
+                document.write(ajax.responseText)　　
             }
         }
     </script>
