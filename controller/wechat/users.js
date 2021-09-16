@@ -1,10 +1,10 @@
-const GroupsModel = require("../../models/wechat/Groups");
+const UsersModel = require("../../models/wechat/Users");
 const formidable = require("formidable");
 const { v4: uuidv4 } = require("uuid");
 const request = require("request");
 const WechatComponent = require("../../prototype/wechatComponent");
 
-class LoginHandle extends WechatComponent {
+class UsersHandle extends WechatComponent {
   constructor() {
     super();
   }
@@ -16,8 +16,15 @@ class LoginHandle extends WechatComponent {
         var responseBody = JSON.parse(response.body);
         if (responseBody.access_token) {
           let scopeUserInfoUrl = `https://api.weixin.qq.com/sns/userinfo?access_token=${responseBody.access_token}&openid=${responseBody.openid}&lang=zh_CN`;
-          request(scopeUserInfoUrl, function (error, response, body) {
-            res.send(response.body);
+          request(scopeUserInfoUrl, async function (error, _response, body) {
+            var wechatUserInfo = JSON.parse(_response.body);
+            const user = await UsersModel.findOne({
+              openid: wechatUserInfo.openid,
+            });
+            if (!user) {
+              await this.wechatUserRegister(wechatUserInfo);
+            }
+            res.send(_response.body.openid);
           });
         } else {
           res.send(response.body);
@@ -30,5 +37,22 @@ class LoginHandle extends WechatComponent {
       });
     }
   }
+  async wechatUserRegister(data) {
+    data["registerTime"] = new Date().getTime();
+    const newUser = new UsersModel(data);
+    await newUser.save();
+  }
+  async getUserList(req, res, next) {
+    let usersList;
+    try {
+      usersList = await UsersModel.find({});
+      res.send(usersList);
+    } catch (err) {
+      res.send({
+        name: "ERROR_DATA",
+        message: "获取数据失败",
+      });
+    }
+  }
 }
-module.exports = new LoginHandle();
+module.exports = new UsersHandle();
