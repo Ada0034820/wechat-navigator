@@ -1,0 +1,5 @@
+vcn:Ljx123
+cd /home/server/wechat-navigator
+git pull
+pm2 list
+pm2 reload 0
