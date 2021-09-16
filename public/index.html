@@ -24,7 +24,7 @@
         }
         let code = getQueryVariable("code")
         var ajax = new XMLHttpRequest();
-        ajax.open('get', `http://localhost:3000/wechat/getWechatUserInfo?code=${code}`);
+        ajax.open('get', `http://www.qunjiarenmai.com:3000/wechat/getWechatUserInfo?code=${code}`);
         ajax.send();
         ajax.onreadystatechange = function() {
             if (ajax.readyState == 4 && ajax.status == 200) {
