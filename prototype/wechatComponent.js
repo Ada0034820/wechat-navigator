@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const BaseComponent = require('./baseComponent')
+const BaseComponent = require("./baseComponent");
 
 class WechatComponent extends BaseComponent {
   constructor() {
@@ -8,4 +8,4 @@ class WechatComponent extends BaseComponent {
   }
 }
 
-module.exports = WechatComponent
+module.exports = WechatComponent;

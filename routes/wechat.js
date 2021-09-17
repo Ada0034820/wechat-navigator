@@ -10,6 +10,7 @@ router.post("/addimg", GroupHandle.uploadImg);
 router.post("/addGroup", GroupHandle.addGroup);
 router.post("/editGroup", GroupHandle.editGroup);
 router.post("/deleteGroup", GroupHandle.deleteGroup);
+router.get("/deleteAllGroup", GroupHandle.deleteAllGroup);
 router.get("/getWechatUserInfo", UsersHandle.getWechatUserInfo);
 router.get("/getUserList", UsersHandle.getUserList);
 module.exports = router;

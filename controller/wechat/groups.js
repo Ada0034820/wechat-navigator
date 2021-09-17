@@ -1,12 +1,14 @@
 const GroupsModel = require("../../models/wechat/Groups");
 const formidable = require("formidable");
 const { v4: uuidv4 } = require("uuid");
+const fs = require("fs");
 const WechatComponent = require("../../prototype/wechatComponent");
 
 class GroupHandle extends WechatComponent {
   constructor() {
     super();
     this.getGroupList = this.getGroupList.bind(this);
+    this.addGroup = this.addGroup.bind(this);
   }
   async getGroupList(req, res, next) {
     const type = req.query.type;
@@ -32,11 +34,18 @@ class GroupHandle extends WechatComponent {
           throw new Error("上传图片失败！");
         } else if (!fields.description) {
           throw new Error("描述信息不能为空");
+        } else if (!fields.userid) {
+          throw new Error("未登录");
+        }
+        let user = await this.checkLogin(fields.userid);
+        if (!user) {
+          throw new Error("用户不存在");
         }
         const newGroup = new GroupsModel({
           id: uuidv4(),
           groupImagePath: fields.groupImagePath,
           name: fields.name,
+          userInfo: user,
           description: fields.description,
           uploadTime: new Date().getTime(),
         });
@@ -108,7 +117,36 @@ class GroupHandle extends WechatComponent {
         return;
       }
       try {
+        let repath = "./public" + group.groupImagePath;
+        if (fs.existsSync(repath)) {
+          fs.unlinkSync(repath);
+        }
         await group.remove();
+        res.send({
+          status: 1,
+          success: "删除成功",
+        });
+      } catch (err) {
+        res.send({
+          status: 0,
+          type: "DELETE_FAILED",
+          message: err.message,
+        });
+      }
+    });
+  }
+  async deleteAllGroup(req, res, next) {
+    const form = new formidable.IncomingForm();
+    form.parse(req, async (err, fields, files) => {
+      try {
+        let groups = await GroupsModel.find({});
+        groups.forEach((g) => {
+          let repath = "./public" + g.groupImagePath;
+          if (fs.existsSync(repath)) {
+            fs.unlinkSync(repath);
+          }
+        });
+        await GroupsModel.remove({});
         res.send({
           status: 1,
           success: "删除成功",

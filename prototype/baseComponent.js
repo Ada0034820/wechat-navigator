@@ -1,5 +1,6 @@
 const formidable = require("formidable");
 const path = require("path");
+const UsersModel = require("../models/wechat/Users");
 const fs = require("fs");
 class BaseComponent {
   constructor() {
@@ -58,6 +59,12 @@ class BaseComponent {
         }
       });
     });
+  }
+  async checkLogin(openid) {
+    const user = await UsersModel.findOne({
+      openid: openid,
+    });
+    return user;
   }
 }
 module.exports = BaseComponent;
