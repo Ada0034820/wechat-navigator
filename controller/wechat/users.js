@@ -1,4 +1,5 @@
 const UsersModel = require("../../models/wechat/Users");
+const GroupsModel = require("../../models/wechat/Groups");
 const formidable = require("formidable");
 const { v4: uuidv4 } = require("uuid");
 const request = require("request");
@@ -54,6 +55,34 @@ class UsersHandle extends WechatComponent {
       res.send({
         name: "ERROR_DATA",
         message: "获取数据失败",
+      });
+    }
+  }
+  async getUserById(req, res, next) {
+    let { openid } = req.query;
+    try {
+      const user = await UsersModel.findOne({ openid });
+      res.send(user);
+    } catch (err) {
+      res.send({
+        name: "ERROR_DATA",
+        message: err.message,
+      });
+    }
+  }
+  async getRecordsByOpenid(req, res, next) {
+    let { openid } = req.query;
+    try {
+      const groups = await GroupsModel.find({
+        "userInfo.openid": openid,
+      });
+      console.log(openid, groups);
+      let result = { groups };
+      res.send(result);
+    } catch (err) {
+      res.send({
+        name: "ERROR_DATA",
+        message: err.message,
       });
     }
   }

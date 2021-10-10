@@ -23,6 +23,19 @@ class GroupHandle extends WechatComponent {
       });
     }
   }
+  async getGroupById(req, res, next) {
+    const id = req.query.id;
+    console.log(id);
+    try {
+      const group = await GroupsModel.findOne({ id });
+      res.send(group);
+    } catch (err) {
+      res.send({
+        name: "ERROR_DATA",
+        message: "获取数据失败",
+      });
+    }
+  }
   async addGroup(req, res, next) {
     const form = new formidable.IncomingForm();
     form.parse(req, async (err, fields, files) => {
