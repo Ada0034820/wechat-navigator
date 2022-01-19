@@ -29,9 +29,16 @@ app.use(
     }),
   })
 );
+proxyServer.all("*", function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "content-type");
+  res.header("Access-Control-Allow-Methods", "DELETE,PUT,POST,GET,OPTIONS");
+  next();
+});
 proxyServer.use("/proxy", proxy("localhost:3000"));
 router(app);
 proxyServer.use(express.static("./public"));
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

@@ -5,6 +5,7 @@ const fs = require("fs");
 class BaseComponent {
   constructor() {
     this.uploadImg = this.uploadImg.bind(this);
+    this.saveImgsAndGetPathArray = this.saveImgsAndGetPathArray.bind(this);
   }
   async uploadImg(req, res, next) {
     try {
@@ -22,6 +23,46 @@ class BaseComponent {
       });
     }
   }
+  async saveImgsAndGetPathArray(files) {
+    return new Promise((resolve, reject) => {
+      const form = formidable.IncomingForm();
+      form.uploadDir = "./public/img";
+      let pathNameArr = []
+      for (let key in files) {
+        let file = files[key]
+        const hashName = (
+          new Date().getTime() + Math.ceil(Math.random() * 10000)
+        ).toString(16);
+        const extname = path.extname(file.name);
+        console.log(file.path);
+        if (![".jpg", ".jpeg", ".png"].includes(extname)) {
+          fs.unlinkSync(file.path);
+          res.send({
+            status: 0,
+            type: "ERROR_EXTNAME",
+            message: "文件格式错误",
+          });
+          reject("上传失败");
+          return;
+        }
+        const fullName = hashName + extname;
+        const repath = "./public/img/" + fullName;
+        try {
+          fs.renameSync(file.path, repath);
+          pathNameArr.push("/img/" + fullName)
+        } catch (err) {
+          if (fs.existsSync(repath)) {
+            fs.unlinkSync(repath);
+          } else {
+            fs.unlinkSync(file.path);
+          }
+          reject("保存图片失败");
+        }
+      }
+      resolve(pathNameArr);
+    });
+  }
+
 
   async getPath(req, res) {
     return new Promise((resolve, reject) => {
